@@ -432,6 +432,7 @@ Coll., 25(2):129–130, Dec. 2009.
 
 - [5] Céu:
 
+    - Site de Céu: http://www.ceu-lang.org/
     - F. Sant'Anna. Céu: A reactive language for wireless sensor networks. http://www.cse.ust.hk/~lingu/ SenSys11DC/, 2011.
     - F. Sant'Anna, N. Rodriguez, and R. Ierusalimschy. Céu: Embedded, Safe, and Reactive Programming. Technical Report 12/12, PUC-Rio, 2012.
     - F. Sant'Anna. Safe System-level Concurrency on Resource-Constrained Nodes with Céu. PhD thesis, PUC–Rio, 2013.

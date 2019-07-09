@@ -210,10 +210,10 @@ Essa abordagem já foi validada em aplicações e drivers muito simples, mas ain
 
 ### Aplicações IoT
 
-De modo a avaliar os ganhos de energia com a infraestrutura proposta, precisaremos avaliar o consumo em aplicações realistas.
+De modo a avaliar os ganhos de energia com a infraestrutura proposta, precisaremos avaliar o consumo em aplicações realísticas.
 A comunidade do Arduino tem uma abundância de projetos open-source que podem ser reescritos na nossa linguagem para tirar proveito do modo de standby transparente.
 Então poderemos comparar o consumo de energia entre as versões originais e reescritas para tirar conclusões sobre a efetividade do modo de standby transparente.
-Os cenários mais realistas de IoT usam comunicação por rádio extensivamente.
+Os cenários mais realísticos de IoT usam comunicação por rádio extensivamente.
 Nesse contexto, iremos avaliar desde protocolos ad-hoc simples até protocolos mais complexos com ciência energética para ver até que extensão nossa proposta contribuirá efetivamente para a economia de energia.
 
 Os códigos a seguir ilustram o processo de reescrever os programas entre as duas linguagens.
@@ -444,3 +444,4 @@ Coll., 25(2):129–130, Dec. 2009.
     - F. Sant'anna, R. Ierusalimschy, N. Rodriguez, S. Rossetto, and A. Branco. The design and implementation of the synchronous language Céu. ACM Trans. Embed. Comput. Syst., 16(4):98:1–98:26, July 2017.
     - Santos, Rodrigo C. M. ; Lima, Guilherme F. ; Sant'Anna, Francisco ; Ierusalimschy, Roberto ; Haeusler, Edward H. . A memory-bounded, deterministic and terminating semantics for the synchronous programming language Céu. In: the 19th ACM SIGPLAN/SIGBED International Conference, 2018, Philadelphia. Proceedings of the 19th ACM SIGPLAN/SIGBED International Conference on Languages, Compilers, and Tools for Embedded Systems - LCTES 2018. New York: ACM Press, 2018. p. 1.
     - Lima, Guilherme F. ; Santos, Rodrigo C.M. ; Ierusalimschy, Roberto ; Haeusler, Edward H. ; Sant'Anna, Francisco . A memory-bounded, deterministic and terminating semantics for the synchronous programming language Céu. Journal of Systems Architecture, 2019.
+

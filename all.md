@@ -68,8 +68,6 @@ A diferença mais fundamental entre as duas linguagem é que Céu usa uma noçã
 Essa característica torna o modelo de tempo de Céu exclusivamente reativo a eventos de entrada.
 Como consequência, o tempo não avança durante períodos inativos, fazendo com que todas as aplicações sejam suscetíveis ao modo standby, fato que iremos explorar neste projeto.
 
-## Exemplo Ilustrativo
-
 # Justificativas para Escolha do Tema
 
 De acordo com a Agência Internacional de Energia (IEA), existiam em torno de 14 bilhões de dispositivos conectados tradicionais em 2013 (ex., telefones TVs inteligentes).
@@ -120,30 +118,16 @@ Esperamos que ao reescrever aplicações existentes, estas poderão se beneficia
 
 ### Infraestrutura de Hardware para IoT
 
-A infraestrutura de IoT é construída sobre sistemas embarcados, tais como sensores, transceptores, e outros dispositivos baseados em microcontroladores de baixo consumo de energia.
-
 Usaremos Arduinos como a principal plataforma de hardware para IoT [4].
 A maioria deles é baseada em microcontroladores de baixo consumo da Atmel, tais como o ATmega328p, suportando seis modos standby que podem reduzir o consumo para níveis baixíssimos.
 Dependendo das configurações (ex., frequência e voltagem), um Arduino pode drenar de 45mA em operação máxima até 5uA no nível mais profundo de standby.
 A literatura mostra que é possível fazer com que as aplicações operem apenas 50% do tempo em média.
 Considerando o consumo desprezível de standby, esse comportamento economizaria 50% da bateria.
 
-Além do bom suporte ao baixo consumo em standby, os Arduinos são baratos, open-source e muito populares.
-Assim, poderemos tirar vantagem dessa plataforma em diversos ambientes:
-
-- Pesquisa
-
-No ambiente acadêmico, já existe bastante pesquisa com o uso de Arduinos no contexto de IoT (ex., infraestrutura, saúde e automação residencial) [4].
+No ambiente acadêmica, já existe bastante pesquisa com o uso de Arduinos no contexto de IoT [4].
 A popularidade do Arduino fará com que a nossa pesquisa seja mais acessível e reproduzível para outros grupos.
-
-- Educação
-
-O Arduino é utilizado em muitos cursos em universidades pelo mundo [4].
+Em educação, muitos cursos em universidades usam o Arduino [4].
 Nós também usamos o Arduino em cursos de graduação e pós-graduação nos últimos 5 anos, o que permitirá avaliar os resultados com programadores de sistemas embarcados menos experientes.
-
-- Hobistas
-
-Na comunidade hobista, há uma abundância de software publicamente disponível que poderemos adaptar para a nossa linguagem e avaliar os ganhos de eficiência energética.
 
 ### Infraestrutura de Software para IoT
 
@@ -165,12 +149,10 @@ O código a seguir é um esboço da abordagem que iremos adotar.
 A aplicação solicita, a cada hora, a leitura de um conversor analógico digital e aguarda o seu retorno para executar alguma ação:
 
 ```
-// application.ceu
-
 output none ADC_REQUEST
 input  int  ADC_DONE
 
-#include "adc.ceu" // driver implementation
+#include "adc.ceu"
 
 every 1h do
     emit ADC_REQUEST
@@ -184,8 +166,6 @@ As aplicações usam nomes para abstrair os eventos de entrada e saída que são
 A maior parte do trabalho fica a cargo do driver, que é escrito apenas uma vez e pode ser reusado em todas as aplicações:
 
 ```
-// adc.ceu
-
 output none ADC_REQUEST do
     <configures-ADC>;
     <enables-ADC-interrupts>;
@@ -245,33 +225,21 @@ Note que as chamadas de funções em C, que não carregam nenhuma semântica de 
 Em testes preliminares como esse, conseguimos economias de ordem significativa, mas ainda é preciso avaliar aplicações complexas onde há concorrência e uso de múltiplos sensores e atuadores.
 
 No longo prazo, esperamos mostrar para desenvolvedores as vantagens de reescreverem suas aplicações em Céu e tirarem proveito dos modos de standby automaticamente.
-Nessa direção, avaliaremos os seguintes critérios:
-
-- Tempo de reescrita:
-
-Esse critério avalia os incentivos para reescrever aplicações já existentes em Arduino para Céu.
-É um tradeoff entre o tempo da reescrita e os ganhos de eficiência energética esperados.
-
-- Estética do código:
-
-Para reduzir a barreira de adoção, é importante que o paradigma de programação seja suficientemente familiar e, no mínimo, tão fácil de programar quanto o de Arduino.
-
-- Consumo de Energia:
-
-Como critério mais importante, aplicações reescritas devem ter economias significativas de energia para justificar a reescrita completa de aplicações.
+Nessa direção, avaliaremos o tempo tomado para reescrever as aplicações e os
+ganhos reais de eficiência energética.
 
 ## 12 Meses Finais e Trabalhos Futuros
 
-- Arquiteturas e Aplicações de IoT Complexas
+### Arquiteturas e Aplicações de IoT Complexas
 
 O nicho de sistemas embarcados restritos, que inclui o Arduino, cobre a parte substancial (e crescente) de aplicações IoT.
 Tipicamente, essas arquiteturas não requerem muitos recursos computacionais e são sensíveis às dimensões físicas e consumo de energia.
 No entanto, a IoT também consiste de dispositivos conectados tradicionais, tais como roteadores, servidores e smartphones.
 Até 2016 existiam 3.9 bilhões de assinaturas de smartphones no mundo e esse número deve alcançar 6.8 bilhões até 2022 [1].
 
-Smartphones usam arquiteturas muito mais complexas do que microcontroladores embarcados (ex., CPUs de 32-bits com unidade de gerenciamento de memória).
+Smartphones usam arquiteturas muito mais complexas do que microcontroladores embarcados.
 Tipicamente essas arquiteturas dependem de um sistema operacional, uma pilha de TCP/IP completa, e podem executar múltiplas aplicações simultaneamente.
-Além de aplicações reativas, típicas de IoT, smartphones também executam computações pesadas, tais como processamento de audio/imagem/vídeo e funções criptográficas.
+Além de aplicações reativas, típicas de IoT, smartphones também executam computações pesadas, tais como processamento de imagem e funções criptográficas.
 Mesmo assim, smartphones são uma peça importante na IoT, servindo como uma interface comum aos humanos para processar, visualizar e atuar na rede.
 
 Smartphones têm restrições similares de consumo de bateria e também podem tirar proveito das técnicas propostas para sistemas embarcados restritos.
@@ -282,7 +250,7 @@ De modo a transpor a barreira de dispositivos IoT restritos para os smartphones,
 - Infraestrutura de Software:
     De modo a garantir standby automático para aplicações, toda infraestrutura de software, principalmente device drivers, também terá que ser recriada usando ISRs em Céu.
 - Aplicações:
-    Além de aplicações IoT, as aplicações típicas de smartphone, tais como mensagens instantâneas e navegação Web, também podem melhorar a eficiência energética através do modo de standby. Iremos reescrever desde aplicações simples, tais como um relógio gráfico, até aplicações em rede mais complexas, tais como um navegador, para avaliar o consumo de energia.
+    Além de aplicações IoT, as aplicações típicas de smartphone, tais como mensagens instantâneas e navegação Web, também podem melhorar a eficiência energética através do modo de standby.
 
 # Resultados Esperados
 
@@ -378,40 +346,40 @@ Diária Internacional    1500    15    22.500
     - OECD/IEA. More data less energy—Making network standby more efficient in billions of connected devices. Technical report, International Energy Agency, 2014.
     - G20's Energy Efficiency Action Plan: https://www.iea-4e.org/projects/g20, 2019.
     - EDNA initiative: https://edna.iea-4e.org/, 2019.
-    - E. Tychon, B. Schoening, M. Chandramouli, and B. Nordman. Energy management (EMAN) applicability statement. Technical report, IETF, 2011.
+    - E. Tychon et al. Energy management (EMAN) applicability statement. Technical report, IETF, 2011.
     - R. N. Elliott, M. Molina, and D. Trombley. A defining framework for intelligent efficiency. Technical Report E125, American Council for an Energy-Efficient Economy (ACEEE), 2012.
     - R. Brown, C. Webber, and J. G. Koomey. Status and future directions of the ENERGY STAR program. Energy,
 27(5):505–520, 2002.
     - G. Reiter. Wireless connectivity for the internet of things. Technical report, Texas Instruments, 2014.
-    - E. A. Rogers, R. N. Elliott, S. Kwatra, D. Trombley, and V. Nadadur. Intelligent efficiency: opportunities, barriers, and solutions. Technical Report E13J, American Council for an Energy-Efficient Economy (ACEEE), 2013.
+    - E. A. Rogers et al. Intelligent efficiency: opportunities, barriers, and solutions. Technical Report E13J, American Council for an Energy-Efficient Economy (ACEEE), 2013.
     - N. Heuveldop. Ericsson mobility report. Technical report, Ericsson, AB, 2017.
 
 - [2] Trabalhos Relacionados em Ciência de Energia:
 
     - J. Flinn and M. Satyanarayanan. Managing battery lifetime with energy-aware adaptation. ACM Trans. Comput.  Syst., 22(2):137–179, May 2004.
     - W. Baek and T. M. Chilimbi. Green: A framework for supporting energy-conscious programming using controlled approximation. In Proceedings of the 31st ACM SIGPLAN Conference on Programming Language Design and Implementation, PLDI '10, pages 198–209, New York, NY, USA, 2010. ACM.
-    - A. Canino. Gradual mode types for energy-aware programming. In Companion Proceedings of the 2015 ACM SIG- PLAN International Conference on Systems, Programming, Languages and Applications: Software for Humanity, SPLASH Companion 2015, pages 79–80, New York, NY, USA, 2015. ACM.
-    - A. Canino and Y. D. Liu. Proactive and adaptive energy-aware programming with mixed typechecking. In Proceed- ings of the 38th ACM SIGPLAN Conference on Programming Language Design and Implementation, PLDI 2017, pages 217–232, New York, NY, USA, 2017. ACM.
-    - M. Cohen, H. S. Zhu, E. E. Senem, and Y. D. Liu. Energy types. In Proceedings of the ACM International Conference on Object Oriented Programming Systems Languages and Applications, OOPSLA '12, pages 831–850, New York, NY, USA, 2012. ACM.
+    - A. Canino. Gradual mode types for energy-aware programming. In Proceedings of SPLASH Companion 2015, pages 79–80, New York, NY, USA, 2015. ACM.
+    - A. Canino and Y. D. Liu. Proactive and adaptive energy-aware programming with mixed typechecking. In Proceedings of PLDI 2017, pages 217–232, New York, NY, USA, 2017. ACM.
+    - M. Cohen et al. Energy types. In Proceedings of OOPSLA '12, pages 831–850, New York, NY, USA, 2012. ACM.
     - H. Hoffmann. Jouleguard: Energy guarantees for approximate applications. In Proceedings of the 25th Symposium
 on Operating Systems Principles, SOSP '15, pages 198–214, New York, NY, USA, 2015. ACM.
-    - A. Kansal, S. Saponas, A. B. Brush, K. S. McKinley, T. Mytkowicz, and R. Ziola. The latency, accuracy, and
-battery (lab) abstraction: Programmer productivity and energy efficiency for continuous mobile context sensing.  In Proceedings of the 2013 ACM SIGPLAN International Conference on Object Oriented Programming Systems Languages &#38; Applications, OOPSLA '13, pages 661–676, New York, NY, USA, 2013. ACM.
-    - J. Park, H. Esmaeilzadeh, X. Zhang, M. Naik, and W. Harris. Flexjava: Language support for safe and modular approximate programming. In Proceedings of the 2015 10th Joint Meeting on Foundations of Software Engineering, ESEC/FSE 2015, pages 745–757, New York, NY, USA, 2015. ACM.
-    - A. Sampson, W. Dietl, E. Fortuna, D. Gnanapragasam, L. Ceze, and D. Grossman. Enerj: Approximate data types for safe and general low-power computation. SIGPLAN Not., 46(6):164–174, June 2011.
-    - J. Sorber, A. Kostadinov, M. Garber, M. Brennan, M. D. Corner, and E. D. Berger. Eon: A language and runtime system for perpetual systems. In Proceedings of the 5th International Conference on Embedded Networked Sensor Systems, SenSys '07, pages 161–174, New York, NY, USA, 2007. ACM.
-    - H. Zeng, C. S. Ellis, A. R. Lebeck, and A. Vahdat. Ecosystem: Managing energy as a first class operating system resource. SIGARCH Comput. Archit. News, 30(5):123–132, Oct. 2002.
+    - A. Kansal et al. The latency, accuracy, and
+battery (lab) abstraction: Programmer productivity and energy efficiency for continuous mobile context sensing. In Proceedings of OOPSLA '13, pages 661–676, New York, NY, USA, 2013. ACM.
+    - J. Park et al. Flexjava: Language support for safe and modular approximate programming. In Proceedings of the 2015 10th Joint Meeting on Foundations of Software Engineering, ESEC/FSE 2015, pages 745–757, New York, NY, USA, 2015. ACM.
+    - A. Sampson et al. Enerj: Approximate data types for safe and general low-power computation. SIGPLAN Not., 46(6):164–174, June 2011.
+    - J. Sorber et al. Eon: A language and runtime system for perpetual systems. In Proceedings of SenSys '07, pages 161–174, New York, NY, USA, 2007. ACM.
+    - H. Zeng et al. Ecosystem: Managing energy as a first class operating system resource. SIGARCH Comput. Archit. News, 30(5):123–132, Oct. 2002.
     - Y. Zhu and V. J. Reddi. Greenweb: Language extensions for energy-efficient mobile web computing. In Proceedings of the 37th ACM SIGPLAN Conference on Programming Language Design and Implementation, PLDI '16, pages 145–160, New York, NY, USA, 2016. ACM.
 
 - [3] Linguagem C/Derivadas e Técnicas de Programação em Sistemas Embarcados:
 
-    - E. Baccelli, O. Hahm, M. Gunes, M. Wahlisch, and T. C. Schmidt. Riot os: Towards an os for the internet of things.  In Computer Communications Workshops (INFOCOM WKSHPS), 2013 IEEE Conference on, pages 79–80. IEEE, 2013.
+    - E. Baccelli et al. Riot os: Towards an os for the internet of things.  In Computer Communications Workshops (INFOCOM WKSHPS), 2013 IEEE Conference on, pages 79–80. IEEE, 2013.
     - M. Barr. Real men program in C. Embedded Systems Design, 22(7):3, 2009.
     - M. de Icaza. Callbacks as our generations' go to statement. https://tirania.org/blog/archive/2013/Aug-15.html (accessed in Jul-2019), 2013.
     - Dunkels et al. Contiki - a lightweight and flexible operating system for tiny networked sensors. In Proceedings of LCN'04, pages 455–462, Washington, DC, USA, 2004. IEEE Computer Society.
     - A. Dunkels, O. Schmidt, T. Voigt, and M. Ali. Protothreads: simplifying event-driven programming of memory- constrained embedded systems. In Proceedings of SenSys'06, pages 29–42. ACM, 2006.
-    - D. Gay, P. Levis, R. von Behren, M. Welsh, E. Brewer, and D. Culler. The nesC language: A holistic approach to networked embedded systems. In Proceedings of PLDI'03, pages 1–11, 2003.
-    - J. Hill, R. Szewczyk, A. Woo, S. Hollar, D. Culler, and K. Pister. System architecture directions for networked sensors. SIGPLAN Notices, 35:93–104, November 2000.
+    - D. Gay et al.. The nesC language: A holistic approach to networked embedded systems. In Proceedings of PLDI'03, pages 1–11, 2003.
+    - J. Hill et al. System architecture directions for networked sensors. SIGPLAN Notices, 35:93–104, November 2000.
     - P. Levis, S. Madden, J. Polastre, R. Szewczyk, K. Whitehouse, A. Woo, D. Gay, J. Hill, M. Welsh, E. Brewer, et al.  Tinyos: An operating system for sensor networks. Ambient intelligence, 35:115–148, 2005.
     - I. Maier, T. Rompf, and M. Odersky. Deprecating the observer pattern. Technical report, 2010.
     - E. Meijer. Reactive extensions (rx): curing your asynchronous programming blues. In ACM SIGPLAN Commercial Users of Functional Programming, CUFP '10, pages 11:1–11:1, New York, NY, USA, 2010. ACM.
@@ -421,13 +389,13 @@ battery (lab) abstraction: Programmer productivity and energy efficiency for con
     - Atmel. ATmega328P Datasheet, 2011.
     - J. D. Brock, R. F. Bruce, and S. L. Reiser. Using arduino for introductory programming courses. J. Comput. Sci.
 Coll., 25(2):129–130, Dec. 2009.
-    - L. Buechley, M. Eisenberg, J. Catchen, and A. Crockett. The lilypad arduino: Using computational textiles to investi- gate engagement, aesthetics, and diversity in computer science education. In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems, CHI '08, pages 423–432, New York, NY, USA, 2008. ACM.
-    - C. Doukas and I. Maglogiannis. Bringing iot and cloud computing towards pervasive healthcare. In Innovative Mobile and Internet Services in Ubiquitous Computing (IMIS), 2012 Sixth International Conference on, pages 922– 926. IEEE, 2012.
+    - L. Buechley, M. Eisenberg, J. Catchen, and A. Crockett. The lilypad arduino: Using computational textiles to investi- gate engagement, aesthetics, and diversity in computer science education. In Proceedings of SIGCHI '08, pages 423–432, New York, NY, USA, 2008. ACM.
+    - C. Doukas and I. Maglogiannis. Bringing iot and cloud computing towards pervasive healthcare. In IMIS, 2012 Sixth International Conference on, pages 922– 926. IEEE, 2012.
     - V. Georgitzikis, O. Akribopoulos, and I. Chatzigiannakis. Controlling physical objects via the internet using the arduino platform over 802.15. 4 networks. IEEE Latin America Transactions, 10(3):1686–1689, 2012.
-    - K. Gomez, R. Riggio, T. Rasheed, D. Miorandi, and F. Granelli. Energino: A hardware and software solution for energy consumption monitoring. In Modeling and Optimization in Mobile, Ad Hoc and Wireless Networks (WiOpt), 2012 10th International Symposium on, pages 311–317. IEEE, 2012.
+    - K. Gomez et al. Energino: A hardware and software solution for energy consumption monitoring. In WiOpt, 2012 10th International Symposium on, pages 311–317. IEEE, 2012.
     - P. Jamieson. Arduino for teaching embedded systems. are computer scientists and engineering educators missing the boat? Proc. FECS, 289294, 2010.
     - D. Kushner. The making of arduino. IEEE Spectrum, 26, 2011.
-    - K. Mandula, R. Parupalli, C. A. Murty, E. Magesh, and R. Lunagariya. Mobile based home automation using internet of things (iot). In Control, Instrumentation, Communication and Computational Technologies (ICCICCT), 2015 International Conference on, pages 340–343. IEEE, 2015.
+    - K. Mandula et al. Mobile based home automation using internet of things (iot). In ICCICCT, 2015 International Conference on, pages 340–343. IEEE, 2015.
     - J. Sarik and I. Kymissis. Lab kits using the arduino prototyping platform. In Frontiers in Education Conference (FIE), 2010 IEEE, pages T3C–1. IEEE, 2010.
 
 - [5] Céu:
@@ -442,7 +410,7 @@ Coll., 25(2):129–130, Dec. 2009.
     - F. Sant'Anna et al. Reactive traversal of recursive data types. Workshop on Reactive and Event-based Languages & Systems (REBLS'15), 2015.
     - F. Sant'Anna, N. Rodriguez, and R. Ierusalimschy. Structured Synchronous Reactive Programming with Céu. In Proceedings of Modularity'15, 2015.
     - R. Santos, G. Lima, F. Sant'Anna, and N. Rodriguez. Céu-Media: Local Inter-Media Synchronization Using Céu.  In Proceedings of WebMedia'16, pages 143–150, New York, NY, USA, 2016. ACM.
-    - F. Sant'anna, R. Ierusalimschy, N. Rodriguez, S. Rossetto, and A. Branco. The design and implementation of the synchronous language Céu. ACM Trans. Embed. Comput. Syst., 16(4):98:1–98:26, July 2017.
-    - Santos, Rodrigo C. M. ; Lima, Guilherme F. ; Sant'Anna, Francisco ; Ierusalimschy, Roberto ; Haeusler, Edward H. . A memory-bounded, deterministic and terminating semantics for the synchronous programming language Céu. In: the 19th ACM SIGPLAN/SIGBED International Conference, 2018, Philadelphia. Proceedings of the 19th ACM SIGPLAN/SIGBED International Conference on Languages, Compilers, and Tools for Embedded Systems - LCTES 2018. New York: ACM Press, 2018. p. 1.
+    - F. Sant'anna, R. Ierusalimschy, N. Rodriguez, S. Rossetto, and A. Branco. The design and implementation of the synchronous language Céu. ACM TECS, 16(4):98:1–98:26, July 2017.
+    - Santos, Rodrigo C. M. ; Lima, Guilherme F. ; Sant'Anna, Francisco ; Ierusalimschy, Roberto ; Haeusler, Edward H. . A memory-bounded, deterministic and terminating semantics for the synchronous programming language Céu. In: the 19th ACM SIGPLAN/SIGBED International Conference, 2018, Philadelphia. LCTES 2018. New York: ACM Press, 2018. p. 1.
     - Lima, Guilherme F. ; Santos, Rodrigo C.M. ; Ierusalimschy, Roberto ; Haeusler, Edward H. ; Sant'Anna, Francisco . A memory-bounded, deterministic and terminating semantics for the synchronous programming language Céu. Journal of Systems Architecture, 2019.
 

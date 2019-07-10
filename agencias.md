@@ -1,6 +1,6 @@
 # Recursos Financeiros de Agências de Fomento
 
-Este projeto sendo submetido à FAPERJ é baseado em um projeto de 5 anos aprovado pelo Instituto Serrapilheira, mas que acabou sendo financiado somente por um ano (apenas 12 dos 70 projetos inicialmente submetidos continuaram):
+Este projeto sendo agora submetido à FAPERJ é baseado em um projeto de 5 anos aprovado pelo Instituto Serrapilheira, mas que acabou sendo financiado somente por um ano (apenas 12 dos 70 projetos inicialmente aprovados continuaram sendo financiados):
 
 - Título: "Energy Efficiency for IoT Software in the Large"
     - Número do Processo: Serra-1708-15612

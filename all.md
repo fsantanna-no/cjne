@@ -4,7 +4,7 @@ Eficiência Energética e "Standby" como Princípio de uma Linguagem de Programa
 
 # Resumo
 
-Estima-se que o consumo anual de energia de dispositivos conectados em todo o mundo é superior ao consumo total de energia da Alemanha.
+Estima-se que o consumo anual de energia de dispositivos conectados em todo o mundo seja superior ao consumo total de energia da Alemanha.
 No entanto, a maior parte dessa energia é gasta em modo "standby" (modo de espera), ou seja, quando o dispositivo não está desempenhando sua finalidade.
 A Agência Internacional de Energia (IEA) prevê que o uso efetivo de standby terá papel fundamental na eficiência energética dos 25 bilhões de dispositivos da Internet das Coisas (IoT) esperados até 2025.
 

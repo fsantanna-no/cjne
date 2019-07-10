@@ -1,6 +1,6 @@
 # Título
 
-Eficiência Energética e "Standby" como Princípio de uma Linguagem de Programação voltada para a Internet das Coisas
+Eficiência Energética e "Standby" como Princípios de uma Linguagem de Programação para a Internet das Coisas
 
 # Resumo
 

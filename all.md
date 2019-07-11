@@ -10,7 +10,7 @@ A Agência Internacional de Energia (IEA) prevê que o uso efetivo de standby te
 
 Este projeto de pesquisa visa endereçar os desafios de energia para o software de dispositivos conectados conforme determinados pela IEA: garantir que os dispositivos adotem os níveis de standby mais profundos, e que permaneçam em standby o maior tempo possível.
 
-Propomos investigar a eficiência energética como princípio de uma linguagem de programação, de modo que todos os programas se beneficiem de longos e profundos períodos de standby automaticamente, sem esforços extras de programação.
+Propomos investigar a eficiência energética de software como princípio de uma linguagem de programação, de modo que todos os programas se beneficiem de longos e profundos períodos de standby automaticamente, sem esforços extras de programação.
 O foco principal da linguagem é em aplicações reativas que interagem com o ambiente em ciclos contínuos de espera, leitura de sensores e atuação, típicos de sistemas embarcados e IoT.
 A linguagem é baseada no modelo de concorrência síncrono, que troca poder por confiabilidade e possui um modelo de tempo mais simples mas que cobre os requisitos de aplicações reativas.
 Nesse modelo, todas as reações ao mundo externo são computadas em tempo finito, garantindo que as aplicações sempre cheguem a um estado ocioso suscetível ao modo standby.
@@ -23,7 +23,7 @@ The International Energy Agency (IEA) estimates that effective use of standby wi
 
 This research project aims to address the energy-efficiency challenges for the software of connected devices, as determined by IEA: to ensure that devices power down to lowest possible consumption modes, and that they remain there for longest possible periods of time.
 
-We propose to investigate the energy efficiency as the principle of a programming language, so that all programs take advantage of deep and long periods of standby automatically, without extra programming efforts.
+We propose to investigate the energy efficiency of software as the principle of a programming language, so that all programs take advantage of deep and long periods of standby automatically, without extra programming efforts.
 The language focuses on reactive applications that interact continuously with the environment in a wait-sense-actuate loop typical of embedded systems and IoT.
 The language is grounded on the synchronous concurrency model, which trades power for reliability and has a simpler model of time that suits the requirements of reactive applications.
 In this model, all reactions to the external world are guaranteed to be computed in bounded time, ensuring that applications always reach an idle state amenable to standby mode.
@@ -34,8 +34,8 @@ Apesar dos avanços de pesquisa em linguagens de programação, sistemas embarca
 A predominância de C está associada a sua portabilidade entre arquiteturas, sua eficiência em termos de uso de memória e CPU, e também ao seu legado de código e programadores.
 Sendo assim, o desenvolvimento completo da pilha de IoT ainda depende muito de C, desde as aplicações de mais alto nível, passando por protocolos de redes, até sistemas operacionais, drivers e SoC firmwares [3].
 No entanto, C oferece uma simples abstração de hardware (um assembly portável) e nenhuma ciência sobre o ambiente externo sob o qual as aplicações executam.
-Como exemplo, não há um vocabulário dedicado em C para expressar conceitos que naturalmente aparecem em aplicações de IoT, tais como o tempo, comunicação com sensores, concorrência de eventos e ciência de energia [3].
-Além disso, C também é conhecida como uma linguagem insegura sob o ponto de vista de acesso à memória, sendo a fonte de bugs característicos, tais como vazamento de memória, estouro de buffer e ponteiros pendentes.
+Como exemplo, C não oferece um vocabulário dedicado para expressar conceitos que naturalmente aparecem em aplicações de IoT, tais como o tempo, comunicação com sensores, concorrência de eventos e ciência de energia [3].
+Além disso, C também é conhecida como uma linguagem insegura sob o ponto de vista de acesso à memória, sendo uma fonte de bugs característicos, tais como vazamento de memória, estouro de buffer e ponteiros pendentes.
 
 Existem diversas propostas de pesquisa para linguagens e sistemas operacionais cientes de energia [2].
 Algumas propostas ajustam a qualidade de serviço (QoS) para reduzir o consumo de energia (ex., reduzindo a acurácia de computações).
@@ -44,18 +44,18 @@ Essas iniciativas não se concentram em tirar proveito do modo de standby, mas s
 Também existem protocolos de rede especializados em deixar os dispositivos em standby por logos períodos.
 No entanto, iniciativas baseadas em protocolos se aplicam somente às partes de rede das aplicações que ainda assim devem ser programadas cuidadosamente para tirar proveito de standby.
 
-O TinyOS [3] é um sistema operacional que usa um dialeto de C e atende parcialmente a alguns de nossos objetivos.
+O TinyOS [3] é um sistema operacional para redes de sensores sem fio que usa um dialeto de C e atende parcialmente aos nossos objetivos.
 Aplicações escritas nesse dialeto podem tirar proveito de standby automaticamente, mas ainda dependem de um controle manual do ciclo de vida dos drivers (ex., para ligar ou desligar dispositivos).
 Além disso, sendo um sistema operacional completo, a sua base de código de um é complexa e escrita inteiramente em C.
-Por fim, o paradigma de programação por callbacks imposto pelo TinyOS é conhecido como difícil e mais suscetível a erros.
-Considerando essas limitações, temos como objetivos prover suporte a economia de energia automática no nível da linguagem de maneira completa, além de oferecer um paradigma de programação estruturado mesmo na presença de concorrência entre eventos [3].
+Por fim, para lidar com concorrência entre eventos, o TinyOS impõe o paradigma de programação por callbacks que é conhecido como difícil e mais suscetível a erros.
+Considerando essas limitações, temos como objetivos prover suporte a economia de energia automática já no nível da linguagem e de maneira completa, além de oferecer um paradigma de programação estruturado mesmo na presença de concorrência entre eventos [3].
 
 Tenho trabalhado no projeto e implementação da linguagem de programação Céu pelos últimos 10 anos [5].
 Céu é uma nova linguagem reativa que tem como foco principal sistemas embarcados restritos.
-A linguagem é baseada no modelo de concorrência síncrono, que troca poder por confiabilidade e possui um modelo de tempo mais simples que cobre a maioria dos requisitos de aplicações IoT.
+A linguagem é baseada no modelo de concorrência síncrono, que troca poder por confiabilidade e possui um modelo de tempo mais simples mas que cobre os requisitos principais de aplicações IoT.
 Nesse modelo, todas as reações ao mundo externo são computadas em tempo finito, garantindo que as aplicações sempre cheguem a um estado ocioso suscetível ao modo standby.
 
-Em trabalhos anteriores [5], adaptamos Céu para executar sobre o TinyOS no contexto de Redes de Sensores Sem Fio e desenvolvemos algumas aplicações, protocolos e device drivers.
+Em trabalhos anteriores [5], adaptamos Céu para executar sobre o TinyOS no contexto de redes de sensores sem fio e desenvolvemos algumas aplicações, protocolos e device drivers.
 Nós avaliamos a expressividade de Céu em comparação com C e verificamos uma redução de código na ordem de 25%, com um pequeno aumento de memória em torno de 5%.
 Também avaliamos a responsividade da CPU sob tráfego de dados intenso e verificamos uma performance similar entre as duas linguagens.
 Em outro trabalho [5], desenvolvemos uma máquina virtual minúscula de Céu para dispositivos de baixo consumo energético que permite reprogramação remota.
@@ -71,7 +71,7 @@ Como consequência, o tempo não avança durante períodos inativos, fazendo com
 
 De acordo com a Agência Internacional de Energia (IEA), existiam em torno de 14 bilhões de dispositivos conectados tradicionais em 2013 (ex., telefones TVs inteligentes).
 Esse número deve crescer para 25 bilhões até 2025 com a proliferação de dispositivos IoT (ex., lâmpadas inteligentes e tecnologia vestível).
-Dispositivos tradicionais e de IoT já superam o número de pessoas no planeta por um fator de dois e o tráfego de dados entre eles deve crescer a uma taxa exponencial nos próximos anos.
+Dispositivos tradicionais e de IoT já superam o número de pessoas no planeta por um fator de dois e o tráfego de dados resultante deve crescer a uma taxa exponencial nos próximos anos.
 No entanto, a maior parte da energia desses aparelhos é consumida quando eles estão em "standby" (modo em espera), ou seja, quando os dispositivos não estão desempenhando suas finalidades principais.
 A emissão anual de CO2 relacionada a standby é equivalente a de 1 milhão de carros.
 A projeção de crescimento de IoT, juntamente com o efeito surpreendente dos efeitos de consumo de standby, fizeram com que a eficiência de standby para dispositivos conectados fosse um dos seis pilares do "Plano de Ação para Eficiência Energética" do G20 [1].
@@ -82,9 +82,9 @@ Para o American Council for an Energy-Efficient Economy (ACEEE), "o potencial pa
 
 Considerando iniciativas concretas, o grupo de trabalho "Electronic Devices and Networks" da IEA foca especificamente na questão do standby em dispositivos conectados [1].
 A iniciativa da ACEEE em "Intelligent Efficiency" promove uma abordagem sistemática para otimizar o comportamento cooperativo de dispositivos de modo a buscar ganhos de energia como um todo.
-Ambas as abordagens (por dispositivo ou sistêmica) envolvem soluções de software, dado que a economia de energia é uma política dinâmica que depende das demandas das aplicações e níveis de baterias em determinados momentos.
+Ambas as abordagens (por dispositivo e sistêmica) envolvem soluções de software, dado que a economia de energia é uma política dinâmica que depende das demandas das aplicações e níveis de baterias em determinados momentos.
 
-Também existem padrões de baixo consumo de energia para a infraestrutura de IoT com diferentes demandas de alcance, velocidade e distribuição física.
+Também existem padrões de baixo consumo de energia para a infraestrutura de telecomunicações de IoT com diferentes demandas de alcance, velocidade e distribuição física.
 Como exemplo, o Bluetooth Low-Energy (BLE) é um substituto para o padrão Bluetooth clássico e é projetado para baixas velocidades em redes pessoais (PANs).
 O 6LoWPAN adapta o padrão IPv6 para baixo consumo e em dispositivos de processamento limitado.
 Essas tecnologias permitem transmissões mais eficientes, suportam topologias flexíveis e reduzem o tráfego consideravelmente.
@@ -93,19 +93,18 @@ No entanto, essas tecnologias também exigem o uso de software para controlar os
 
 # Objetivos
 
-O uso efetivo de standby terá papel fundamental na eficiência energética dos 25 bilhões de dispositivos IoT esperados até 2025.
-Para confrontar esse desafio, novas soluções devem ser escaláveis para a massa software IoT que está por vir e que precisará usar standby de maneira efetiva.
+Para confrontar o desafio de um uso efetivo e generalizado de standby, novas soluções devem ser escaláveis para a massa software IoT que está por vir.
 Este projeto de pesquisa visa endereçar os desafios energéticos de software, conforme determinados pela IEA [1]:
 
-- Garantir que os dispositivos atinjam o nível mais profundo possível de standby.
-- Garantir que os dispositivos permaneçam o maior tempo possível em standby.
+- Garantir que os dispositivos atinjam níveis profundos de standby.
+- Garantir que os dispositivos permaneçam longos períodos em standby.
 
 Tendo em vista a escala projetada para a IoT e o papel do modo standby para a eficiência energética, este projeto de pesquisa tem os seguintes objetivos específicos:
 
 1. Endereçar a eficiência energética com o uso criterioso de standby.
 2. Focar em arquiteturas embarcadas restritas que formam a IoT.
 3. Prover mecanismos de standby no nível de linguagens de programação possibilitando escalar para todas as aplicações.
-4. Suportar mecanismos de standby transparentes e não intrusivos para reduzir as barreiras de adoção.
+4. Suportar mecanismos de standby transparentes e não intrusivos para reduzir as barreiras de adoção por programadores.
 
 Essa proposta se situa na camada mais baixa de desenvolvimento de software --- na linguagem de programação --- o que significa que todas as aplicações escritas nela tirarão vantagem do modo standby automaticamente, sem esforços extras de programação.
 
@@ -118,7 +117,7 @@ Esperamos que ao reescrever aplicações existentes, estas poderão se beneficia
 ### Infraestrutura de Hardware para IoT
 
 Usaremos Arduinos como a principal plataforma de hardware para IoT [4].
-A maioria deles é baseada em microcontroladores de baixo consumo de energia, tais como o ATmega328p que suporta seis modos standby.
+A maioria deles é baseada em microcontroladores de baixo consumo de energia, tais como o ATmega328p que suporta seis modos de standby.
 Dependendo das configurações (ex., frequência e voltagem), um Arduino pode drenar de 45mA em operação máxima até 5uA no nível mais profundo de standby.
 A literatura mostra que é possível fazer com que aplicações IoT operem com apenas 50% de "duty cycle" em média.
 Assim, considerando que o consumo em standby é desprezível, poderemos economizar até 50% de energia.
@@ -134,13 +133,13 @@ Em sistemas Arduino (e embarcados em geral), a maneira mais comum de interagir c
 A técnica de polling gasta ciclos de CPU e previne que o dispositivo entre em modo standby.
 No Arduino, mesmo funcionalidades básicas, tais como temporizadores, conversores A/D, e SPI, usam ciclos de polling que gastam energia ininterruptamente em modo ativo.
 
-De modo a prover standby automático, as aplicações deve ser inteiramente reativas a eventos e precisaremos reescrever toda a infraestrutura de software em Céu.
+De modo a prover standby automático, as aplicações devem ser inteiramente reativas a eventos e precisaremos reescrever toda a infraestrutura de software em Céu.
 Esse processo consiste primordialmente em reescrever "device drivers", que são os pedaços de software que interagem diretamente com o hardware.
 Mais concretamente, no nível mais básico, a eficiência energética depende das rotinas de interrupção (ISRs), que acordam o microcontrolador do modo standby quanto ocorre algum evento em um periférico externo.
 
 Em um projeto anterior, demos os primeiros passos na direção de uma infraestrutura de software em Céu.
-Já adicionamos suporte a rotinas de interrupção (ISRs) como um conceito primitivo na nossa linguagem, o que permite reconstruir a infraestrutura com ciência ao modo standby desde sua base.
-Também escrevemos os primeiros drivers em Céu para dispositivos que se comunicam com o microcontrolador pelo protocolo SPI.
+Já adicionamos suporte a rotinas de interrupção (ISRs) como um conceito primitivo de Céu, o que permite reconstruir a infraestrutura com ciência ao modo standby desde sua base.
+Também escrevemos os primeiros drivers para dispositivos que se comunicam com o microcontrolador pelo protocolo SPI.
 Essa abordagem não irá afetar a maneira como as aplicações são escritas em níveis mais abstratos, que permanecerão similares às aplicações em Arduino.
 No entanto, em vez de gastar ciclos da CPU em espera ativa, as aplicações entrarão no modo de standby mais profundo possível enquanto estiverem ociosas.
 
@@ -160,7 +159,7 @@ every 1h do
 end
 ```
 
-É possível notar que o código é escrito de maneira natural, sem callbacks ou qualquer referência ao modo de standby.
+É possível notar que o código é escrito de maneira estruturada (sem callbacks) e sem qualquer referência explícita a modos de standby.
 As aplicações usam nomes para abstrair os eventos de entrada e saída que são implementados em drivers.
 A maior parte do trabalho fica a cargo do driver, que é escrito apenas uma vez e pode ser reusado em todas as aplicações:
 
@@ -168,19 +167,18 @@ A maior parte do trabalho fica a cargo do driver, que é escrito apenas uma vez 
 output none ADC_REQUEST do
     <configures-ADC>;
     <enables-ADC-interrupts>;
-    <sets-the-deepest-standby-mode>;
+    <informs-deepest-standby-mode>;
 end
 
-input int ADC_DONE [ADC_vect_num] do
+input int ADC_DONE do
     <disables-ADC-interrupts>;
-    var int v = <reads-adc-data>;
-    return v;
+    return <reads-adc-data>;
 end
 ```
 
-O evento de saída configura o periférico para fazer a requisição, habilita as interrupções correspondentes e informa à linguagem qual é o seu modo de standby mais profundo mas que ainda permita que o periférico acorde o microcontrolador.
+O evento de saída (bloco "output") configura o periférico para fazer a requisição, habilita as interrupções correspondentes e informa à linguagem qual é o seu modo de standby mais profundo mas que ainda permita que o periférico acorde o microcontrolador.
 A linguagem é responsável por interagir com os drivers e identificar o maior denominador comum de standby entre todos os dispositivos em uso a cada momento.
-O evento de entrada é acionado pelo dispositivo correspondente através de uma interrupção, acordando a CPU automaticamente.
+O evento de entrada (bloco "input") é acionado pelo dispositivo correspondente através de uma interrupção, acordando a CPU automaticamente.
 O código desabilita futuras interrupções do periférico e retorna a leitura requisitada para a aplicação final.
 
 Com essa abordagem, o código da aplicação permanece similar aos seus equivalentes em Arduino.
@@ -189,11 +187,11 @@ Essa abordagem já foi validada em aplicações e drivers muito simples, mas ain
 
 ### Aplicações IoT
 
-De modo a avaliar os ganhos de energia com a infraestrutura proposta, precisaremos avaliar o consumo em aplicações realísticas.
+De modo a avaliar os ganhos de energia com a infraestrutura proposta, precisaremos medir o consumo em aplicações realísticas.
 A comunidade do Arduino tem uma abundância de projetos open-source que podem ser reescritos na nossa linguagem para tirar proveito do modo de standby transparente.
-Então poderemos comparar o consumo de energia entre as versões originais e reescritas para tirar conclusões sobre a efetividade do modo de standby transparente.
+Então poderemos comparar o consumo de energia entre as versões originais e reescritas para tirar conclusões sobre a efetividade do standby transparente.
 Os cenários mais realísticos de IoT usam comunicação por rádio extensivamente.
-Nesse contexto, iremos avaliar desde protocolos ad-hoc simples até protocolos mais complexos com ciência energética para ver até que extensão a nossa proposta contribuirá efetivamente para economias de energia significativas.
+Nesse contexto, iremos avaliar desde protocolos ad-hoc simples até protocolos mais complexos com ciência energética para ver até que extensão a nossa proposta contribuirá efetivamente para economias de energia.
 
 Os códigos a seguir ilustram o processo de reescrever os programas entre as duas linguagens.
 Os dois códigos fazem a mesma coisa: piscam um LED com uma frequência de 1 segundo:
@@ -220,8 +218,8 @@ loop do
 end
 ```
 
-Note que as chamadas de funções em C, que não carregam nenhuma semântica de eventos, são substituídas por um vocabulário próprio que permite que a linguagem entenda os pontos de espera e possa colocar o microcontrolador em standby.
-Em testes preliminares como esse, conseguimos economias de ordem significativa, mas ainda é preciso avaliar aplicações complexas onde há concorrência e uso de múltiplos sensores e atuadores.
+Note que as chamadas de funções em C, que não carregam nenhuma semântica de eventos, são substituídas por um vocabulário próprio que permite que a linguagem entenda os pontos de espera (comando "await") e possa colocar o microcontrolador em standby.
+Em testes preliminares como esse, conseguimos economias de ordem significativa (acima de 50%), mas ainda é preciso avaliar aplicações complexas onde há concorrência e uso de múltiplos sensores e atuadores.
 
 No longo prazo, esperamos mostrar para desenvolvedores as vantagens de reescreverem suas aplicações em Céu e tirarem proveito dos modos de standby automaticamente.
 Nessa direção, avaliaremos o tempo necessário para reescrever as aplicações e os ganhos reais de eficiência energética.
@@ -231,13 +229,13 @@ Nessa direção, avaliaremos o tempo necessário para reescrever as aplicações
 ### Arquiteturas e Aplicações de IoT Complexas
 
 O nicho de sistemas embarcados restritos, que inclui o Arduino, cobre a parte substancial (e crescente) de aplicações IoT.
-Tipicamente, essas arquiteturas não requerem muitos recursos computacionais e são sensíveis às dimensões físicas e consumo de energia.
+Tipicamente, essas arquiteturas não requerem muitos recursos computacionais mas são sensíveis às dimensões físicas e consumo de energia.
 No entanto, a IoT também consiste de dispositivos conectados tradicionais, tais como roteadores, servidores e smartphones.
 Até 2016 existiam 3.9 bilhões de assinaturas de smartphones no mundo e esse número deve alcançar 6.8 bilhões até 2022 [1].
 
 Smartphones usam arquiteturas muito mais complexas do que microcontroladores embarcados.
 Tipicamente essas arquiteturas dependem de um sistema operacional, uma pilha de TCP/IP completa, e podem executar múltiplas aplicações simultaneamente.
-Além de aplicações reativas, típicas de IoT, smartphones também executam computações pesadas, tais como processamento de imagem e funções criptográficas.
+Além de aplicações reativas, típicas de IoT, smartphones também executam computações puramente ativas, tais como processamento de imagem e funções criptográficas.
 Mesmo assim, smartphones são uma peça importante na IoT, servindo como uma interface comum aos humanos para processar, visualizar e atuar na rede.
 
 Smartphones têm restrições similares de consumo de bateria e também podem tirar proveito das técnicas propostas para sistemas embarcados restritos.
@@ -254,8 +252,8 @@ De modo a transpor a barreira de dispositivos IoT restritos para os smartphones,
 
 ## 24 Meses Iniciais
 
-O vocabulário de Céu dedicado à interação com o ambiente aumenta o nível de abstração dos programas para um nível mais próximo do domínio de IoT, provendo mais segurança e expressividade para programadores.
-Até onde sabemos, suporte para ISRs no nível de linguagem ainda não foi tentado anteriormente.
+O vocabulário de Céu dedicado à interação com o ambiente aumentará o nível de abstração dos programas para um nível mais próximo do domínio de IoT, provendo mais segurança e expressividade para programadores.
+Esse vocabulário se estenderá até o nível mais básico de interrupções, em uma abordagem que ainda não foi tentada anteriormente.
 
 Nossa proposta visa fazer com que todas as aplicações estejam sujeitas a modos de standby transparentemente.
 Sendo parte da infraestrutura de software, somente device drivers necessitarão de gerenciamento explícito de energia, e todas as aplicações construídas sobre eles se beneficiarão de eficiência energética automaticamente.

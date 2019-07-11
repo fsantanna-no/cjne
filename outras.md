@@ -49,7 +49,13 @@ Participei nele como autor, revisor, chair, e hoje faço parte do comitê perman
     - LCTES - Languages, Compilers, Tools and Theory of Embedded Systems - Qualis B2
         - "A Memory-Bounded, Deterministic and Terminating Semantics for the Synchronous Programming Language Céu"
             - **semântica formal de Céu, provas de terminação, determinismo e limites de memória**
+    - LCTES (work-in-progress) - Languages, Compilers, Tools and Theory of Embedded Systems
+        - "Transparent Standby for Low-Power, Resource-Constrained Embedded Systems"
+            - **ideias de standby em Céu** (short paper)
+    - REBLS (work-in-progress) - Workshop on Reactive and Event-based Languages & Systems
+        - "Where do Events Come From?"
+            - **suporte a interrupções em Céu** (short paper)
 - 2019
     - JSA - Journal of Systems Architecture - Qualis B1
         - "A memory-bounded, deterministic and terminating semantics for the synchronous programming language Céu"
-            - (versão estendida) **semântica formal de Céu, provas de terminação, determinismo e limites de memória**
+            - **semântica formal de Céu, provas de terminação, determinismo e limites de memória** (versão estendida)

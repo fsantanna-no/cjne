@@ -1,4 +1,4 @@
-# Outras Produções Acadêmicas
+# Produções Acadêmicas
 
 Como destacado no documento principal, tenho trabalhado no projeto e implementação da linguagem de programação Céu pelos últimos 10 anos.
 A linha de tempo a seguir enumera todas as publicações relacionadas a Céu nas áreas de linguagens de programação, sistemas embarcados, redes de sensores sem fio, jogos, e sistemas multimídia.

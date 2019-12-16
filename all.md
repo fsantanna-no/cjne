@@ -67,7 +67,7 @@ A diferença mais fundamental entre as duas linguagem é que Céu usa uma noçã
 Essa característica torna o modelo de tempo de Céu exclusivamente reativo a eventos de entrada.
 Como consequência, o tempo não avança durante períodos inativos, fazendo com que todas as aplicações sejam suscetíveis ao modo standby, fato que iremos explorar neste projeto.
 
-# Justificativas para Escolha do Tema
+# Justificativa
 
 De acordo com a Agência Internacional de Energia (IEA), existiam em torno de 14 bilhões de dispositivos conectados tradicionais em 2013 (ex., telefones TVs inteligentes).
 Esse número deve crescer para 25 bilhões até 2025 com a proliferação de dispositivos IoT (ex., lâmpadas inteligentes e tecnologia vestível).
@@ -112,9 +112,7 @@ Esperamos que ao reescrever aplicações existentes, estas poderão se beneficia
 
 # Metodologia
 
-## 24 Meses Iniciais
-
-### Infraestrutura de Hardware para IoT
+## Infraestrutura de Hardware para IoT
 
 Usaremos Arduinos como a principal plataforma de hardware para IoT [4].
 A maioria deles é baseada em microcontroladores de baixo consumo de energia, tais como o ATmega328p que suporta seis modos de standby.
@@ -127,7 +125,7 @@ Portanto, a popularidade do Arduino fará com que a nossa pesquisa seja mais ace
 Em educação, muitos cursos em universidades usam o Arduino [4].
 Nós também usamos o Arduino em cursos de graduação e pós-graduação nos últimos 5 anos, o que permitirá avaliar os resultados com programadores de sistemas embarcados menos experientes.
 
-### Infraestrutura de Software para IoT
+## Infraestrutura de Software para IoT
 
 Em sistemas Arduino (e embarcados em geral), a maneira mais comum de interagir com o mundo externo é através da técnica de "polling", que faz amostragens periódicas em periféricos externos para detectar mudanças de estado.
 A técnica de polling gasta ciclos de CPU e previne que o dispositivo entre em modo standby.
@@ -185,7 +183,7 @@ Com essa abordagem, o código da aplicação permanece similar aos seus equivale
 No entanto, em vez de gastar ciclos da CPU com polling, as aplicações irão entrar em standby sempre que estiverem ociosas.
 Essa abordagem já foi validada em aplicações e drivers muito simples, mas ainda não realizamos estudos completos por se tratar de projeto em estágio preliminar.
 
-### Aplicações IoT
+## Aplicações IoT
 
 De modo a avaliar os ganhos de energia com a infraestrutura proposta, precisaremos medir o consumo em aplicações realísticas.
 A comunidade do Arduino tem uma abundância de projetos open-source que podem ser reescritos na nossa linguagem para tirar proveito do modo de standby transparente.
@@ -224,33 +222,7 @@ Em testes preliminares como esse, conseguimos economias de ordem significativa (
 No longo prazo, esperamos mostrar para desenvolvedores as vantagens de reescreverem suas aplicações em Céu e tirarem proveito dos modos de standby automaticamente.
 Nessa direção, avaliaremos o tempo necessário para reescrever as aplicações e os ganhos reais de eficiência energética.
 
-## 12 Meses Finais e Trabalhos Futuros
-
-### Arquiteturas e Aplicações de IoT Complexas
-
-O nicho de sistemas embarcados restritos, que inclui o Arduino, cobre a parte substancial (e crescente) de aplicações IoT.
-Tipicamente, essas arquiteturas não requerem muitos recursos computacionais mas são sensíveis às dimensões físicas e consumo de energia.
-No entanto, a IoT também consiste de dispositivos conectados tradicionais, tais como roteadores, servidores e smartphones.
-Até 2016 existiam 3.9 bilhões de assinaturas de smartphones no mundo e esse número deve alcançar 6.8 bilhões até 2022 [1].
-
-Smartphones usam arquiteturas muito mais complexas do que microcontroladores embarcados.
-Tipicamente essas arquiteturas dependem de um sistema operacional, uma pilha de TCP/IP completa, e podem executar múltiplas aplicações simultaneamente.
-Além de aplicações reativas, típicas de IoT, smartphones também executam computações puramente ativas, tais como processamento de imagem e funções criptográficas.
-Mesmo assim, smartphones são uma peça importante na IoT, servindo como uma interface comum aos humanos para processar, visualizar e atuar na rede.
-
-Smartphones têm restrições similares de consumo de bateria e também podem tirar proveito das técnicas propostas para sistemas embarcados restritos.
-De modo a transpor a barreira de dispositivos IoT restritos para os smartphones, iremos adotar uma abordagem análoga aos primeiros dois anos:
-
-- Infraestrutura de Hardware:
-    Usaremos o BeagleBone Black, que compartilha objetivos similares ao do Arduino, provendo uma plataforma barata e aberta mas que é adequada a aplicações mais ricas, tais como interfaces gráficas, multimídia, e jogos.
-- Infraestrutura de Software:
-    De modo a garantir standby automático para aplicações, toda infraestrutura de software, principalmente device drivers, também terá que ser recriada usando ISRs em Céu.
-- Aplicações:
-    Além de aplicações IoT, as aplicações típicas de smartphone, tais como mensagens instantâneas e navegação Web, também podem melhorar a eficiência energética através do modo de standby.
-
 # Resultados Esperados
-
-## 24 Meses Iniciais
 
 O vocabulário de Céu dedicado à interação com o ambiente aumentará o nível de abstração dos programas para um nível mais próximo do domínio de IoT, provendo mais segurança e expressividade para programadores.
 Esse vocabulário se estenderá até o nível mais básico de interrupções, em uma abordagem que ainda não foi tentada anteriormente.
@@ -261,19 +233,38 @@ Sendo parte da infraestrutura de software, somente device drivers necessitarão 
 Nossa linguagem é um projeto de 10 anos e tem uma implementação open-source madura que está disponível publicamente para downloads.
 Com a proposta de adaptação ao contexto de eficiência energética para IoT, a linguagem pode se tornar uma alternativa prática ao Arduino no curto prazo.
 
-## 12 Meses Finais e Trabalhos Futuros
+# Local de Execução do Projeto
 
-A transição de telefones simples para smartphones resultou na degradação do tempo de vida das baterias.
-No entanto, a maior parte do tempo, os smartphones estão ociosos nos nossos bolsos mas gastando energia.
-Esperamos aumentar consideravelmente a autonomia das baterias mantendo toda a funcionalidade de um smartphone moderno.
+O projeto será executado em dois laboratórios da UERJ, campus Maracanã:
+
+- LCC: Laboratório de alunos de pesquisa do Departamento de Ciência da Computação. Possui estações de trabalho.
+- LRC: Laboratório de Redes da Pós-Graduação em Engenharia Eletrônica. Possui estações de trabalho e infraestrutura de eletrônica.
+
+O projeto não exige uma infraestrutura complexa, mas apenas estações para desenvolvimento de software e bancadas de eletrônica com multímetros, osciloscópios e afins.
+
+# Potenciais Veículos de Apresentação de Resultados                               
+
+- Journals:
+    - IEEE Embedded Systems Letters
+    - ACM Transactions on Embedded Computing Systems
+    - ACM Transactions on Sensor Networks
+    - Elsevier Journal of Network and Computer Applications
+    - Kluver Real-Time Systems
+    - IGI Int’l Journal of Embedded and Real-Time Comm. Systems
+
+- Conferências:
+    - Languages, Compilers, Tools and Theory of Embedded Systems (LCTES)
+    - ACM Conference on Embedded Networked Sensor Systems (SenSys)
+    - ACM SIGPLAN Conference on Systems, Programming, Languages and Applications (SPLASH)
+    - Simpósio Brasileiro de Linguagens de Programação (SBLP)
+    - Simpósio Brasileiro de Redes de Computadores (SBRC)
+    - Brazilian Symposium on Computing Systems Engineering (SBESC)
 
 # Orçamento Detalhado
 
-O orçamento total para os 3 anos é de R$78.200,00 divididos em recursos de capital (R$32.900,00) e custeio (R$45.300,00).
+O orçamento total para os 2 anos é de R$30.450,00 para recursos de capital.
 
-- Capital
-
-Equipamentos básicos serão necessários para montar um laboratório mínimo para até 3 pesquisadores durante os três anos do projeto:
+Equipamentos básicos serão necessários para montar um laboratório mínimo para até 3 pesquisadores durante os dois anos do projeto:
 
 - um computador para cada pesquisador
 - um notebook compartilhado para atividades em outros laboratórios, aulas e apresentações
@@ -292,14 +283,13 @@ A maior parte desses recursos deverá ser adquirida no primeiro ano do projeto.
 EQUIPAMENTO            PREÇO   QTD     TOTAL
 -----------            -----   ---    ------
 Computador              5500     3    16.500
-Notebook                4600     1     4.600
-Impressora Laser        2800     1     2.800
-Osciloscópio Digital    3500     1     3.500
-Multímetro Fluke        1000     1     1.000
+Notebook                4500     1     4.500
+Impressora Laser        2200     1     2.200
+Osciloscópio Digital    3800     1     3.800
+Multímetro Fluke         950     1       950
 Kits Arduino             250    10     2.500
-Sensores Diversos          -     -     2.000
                                       ------
-                                      32.900
+                                      30.450
 
 - https://www.dell.com/pt-br/work/shop/all-in-ones/all-in-one-inspiron-24-touch/spd/inspiron-24-3477-aio/cai3477w4518brw
 - https://www.dell.com/pt-br/work/shop/notebooks-dell/inspiron-14-5000/spd/inspiron-14-5480-laptop/CAI5480W195303BRW
@@ -309,30 +299,6 @@ Sensores Diversos          -     -     2.000
 - https://www.filipeflop.com/produto/kit-arduino-advanced/
 - https://www.filipeflop.com/produto/beaglebone-black-rev-c/
 
-```
-
-- Custeio
-
-Os recursos de custeio se concentrarão em viagens para eventos e congressos de linguagens de programação, IoT e sistemas embarcados.
-A cada ano, planejamos uma viagem nacional e outra internacional (com 3 diárias) para a publicação de trabalhos científicos e interação com a comunidade científica.
-Podemos destacar as seguintes conferências como prioridades:
-
-- Simpósio Brasileiro de Linguagens de Programação (SBLP)
-- Simpósio Brasileiro de Redes de Computadores (SBRC)
-- Brazilian Symposium on Computing Systems Engineering (SBESC)
-- ACM Conference on Embedded Networked Sensor Systems (SenSys)
-- Languages, Compilers, Tools and Theory of Embedded Systems (LCTES)
-- ACM SIGPLAN Conference on Systems, Programming, Languages and Applications (SPLASH)
-
-```
-VIAGENS                PREÇO   QTD     TOTAL
--------                -----   ---     -----
-Passagem Nacional       1000     3     3.000
-Passagem Internacional  5000     3    15.000
-Diária Nacional          320    15     4.800
-Diária Internacional    1500    15    22.500
-                                      ------
-                                      45.300
 ```
 
 # Bibliografia
